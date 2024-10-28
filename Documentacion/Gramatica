@@ -1,0 +1,91 @@
+<s> ::= <instructions>
+
+<instructions> ::= <instruction> <instructions>
+                | <instruction>
+
+<instruction>  ::= <print>
+                | <break>
+                | <continue>
+                | <return>
+                | <if>
+                | <while>
+                | <switch>
+                | <for>
+                | <foreach>
+                | <struct>
+                | <sstruct>
+                | <statement>
+                | <assignment>
+                | <expression>
+
+<print> ::= "System.out.println(" <expressionPrint> ")"
+
+<statement> ::= <type> <id> "=" <expression>
+                | "var" <id> "=" <expression>
+                | <type> <id> "[]"+ <id> "{" <array2> "}"
+
+<params>    ::= <type> <id> "," <params>
+                | <type> <id>
+
+<array2>    ::= "{" <values> "}" "," <array2>
+                | "{" <values> "}"
+
+<values>    ::= <expression> "," <values>
+                | <expression>
+
+<type>  ::= "int"
+            |"float"
+            |"string"
+            |"char"
+            |"boolean"
+            |"void"
+
+<assignment> ::= <id> "=" <expression>
+            | <id> "+=" <expression>
+            | <id> "-=" <expression>
+            | <id> "[]"+ "=" <expression>
+            | <id> "." <id> "=" <expression>
+
+<if>    ::= "if" "(" <expression> ")" "{" <instructions> "}" <else>?
+
+<else>  ::= "else" "{" <instructions> "}"
+            | "else" <if>
+
+<switch> ::= "switch" "(" <expression> ")" "{" <casesList> "}"
+
+<casesList> ::= <case> <casesList>
+            | <case>
+
+<case>  ::= <expression> ":" <instructions>
+
+<default> "default" ":" <instructions>
+
+<break> ::= "break"
+
+<continue> ::= "continue"
+
+<return> ::= "return" <expression>
+
+<while> ::= "while" "(" <expression> ")" "{" <instructions> "}"
+
+<expression> ::= <prec6> "||" <prec6>*
+<prec6> ::= <prec5> "&&" <prec5>*
+<prec5> ::= <prec4> "=="|"!=" <prec4>*
+<prec4> ::= <prec3> ">"|">="|"<"|"<=" <prec3>*
+<prec3> ::= <prec2> "+"|"-" <prec2>*
+<prec2> ::= <prec1> "*"|"/"|"%" <prec1>*
+<prec1> ::= <nativos>
+
+<nativos> ::= <string>
+            | <char>
+            | <int>
+            | <float>
+            | <boolean>
+            | <id>
+
+<string>    ::= "\"" [^"]* "\""
+<char>  ::= "'" [^'] "'"
+<int>   ::= [0-9]+
+<float> ::= [0-9]+ "." [0-9]+
+<boolean> ::= "true"|"false"
+<id>    ::= [a-zA-Z_] [a-zA-Z0-9_]*
