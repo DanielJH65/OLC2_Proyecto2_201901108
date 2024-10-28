@@ -14,7 +14,11 @@ export class Break extends Instruction {
     translate(tree, table) {
         if (tree.display.length > 0) {
             const data = tree.display[tree.display.length - 1]
-            tree.assembler += `j ${data.get('etiExit')}\n`
+            if (data.get('type') == 'for') {
+                tree.assembler += `j ${data.get('etiBreak')}\n`
+            } else {
+                tree.assembler += `j ${data.get('etiExit')}\n`
+            }
         }
     }
 }

@@ -49,4 +49,31 @@ export class For extends Instruction {
             this.increment.interpret(tree, newTable1)
         }
     }
+
+    translate(tree, table) {
+        this.statement.translate(tree, table)
+        let etiInit = `L${tree.getLabel()}`
+        let etiCont = `L${tree.getLabel()}`
+        let etiBreak = `L${tree.getLabel()}`
+        tree.assembler += `${etiInit}:\n`
+        let exp = this.condition.translate(tree, table)
+        let data = new Map()
+        data.set("type", "for")
+        data.set("etiInit", etiInit)
+        data.set("etiCont", etiCont)
+        data.set("etiBreak", etiBreak)
+        tree.display.push(data)
+
+        tree.assembler += `${exp.etiV}:\n`
+        for (let instruction of this.instructions) {
+            instruction.translate(tree, table)
+        }
+        this.increment.translate(tree, table)
+        tree.assembler += `j ${etiInit}\n`
+        tree.assembler += `${etiCont}:\n`
+        this.increment.translate(tree, table)
+        tree.assembler += `j ${etiInit}\n`
+        tree.assembler += `${exp.etiF}:\n`
+        tree.assembler += `${etiBreak}:\n`
+    }
 }

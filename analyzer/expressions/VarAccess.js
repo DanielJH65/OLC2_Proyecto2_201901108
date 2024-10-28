@@ -30,12 +30,9 @@ export class VarAccess extends Instruction {
     }
 
     translate(tree, table) {
-        let variable = table.getVariable(this.id)
-
         let temp = tree.getTemp()
         tree.assembler += `la t${temp}, ${this.id}\n`
         tree.assembler += `lw t${temp}, 0(t${temp})\n`
-
-        return { 'value': temp, 'type': variable?.getType().getType() }
+        return { 'value': temp, 'type': dataType.INTEGER }
     }
 }

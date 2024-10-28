@@ -13,7 +13,11 @@ export class Continue extends Instruction {
     translate(tree, table) {
         if (tree.display.length > 0) {
             const data = tree.display[tree.display.length - 1]
-            tree.assembler += `j ${data.get('etiInit')}\n`
+            if (data.get('type') == 'for') {
+                tree.assembler += `j ${data.get('etiCont')}\n`
+            } else {
+                tree.assembler += `j ${data.get('etiInit')}\n`
+            }
         }
     }
 }
