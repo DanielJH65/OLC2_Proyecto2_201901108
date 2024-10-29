@@ -3,6 +3,7 @@ import { VarStatement } from "../instructions/VarStatement.js";
 import { dataType, Type } from "../symbol/Type.js";
 import { SymbolsTable } from "../symbol/SymbolsTable.js";
 import { Errors } from "../exceptions/Errors.js";
+import { add } from "../riscv/instructions.js";
 
 export class CallFunction extends Instruction {
     constructor(id, params, row, column) {
@@ -53,5 +54,10 @@ export class CallFunction extends Instruction {
             }
         }
         tree.assembler += `jal ${this.id}\n`
+        let temp = tree.getTemp()
+        tree.ret = false
+        tree.assembler += add('t' + temp, 'a0', 'zero') + '\n'
+        return { 'value': temp, 'type': dataType.INTEGER }
+
     }
 }

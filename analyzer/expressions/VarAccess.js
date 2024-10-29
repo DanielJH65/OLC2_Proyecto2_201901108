@@ -31,9 +31,7 @@ export class VarAccess extends Instruction {
 
     translate(tree, table) {
         let temp = tree.getTemp()
-        console.log(tree.func)
         if (tree.params && tree.func.params.findIndex((el) => this.id === el.get('id')) >= 0) {
-            console.log(tree.params)
             tree.assembler += `add t${temp}, a${tree.paramsCont++}, zero\n`
         } else {
             tree.assembler += `la t${temp}, ${this.id}\n`

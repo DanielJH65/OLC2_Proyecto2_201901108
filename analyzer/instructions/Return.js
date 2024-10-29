@@ -1,4 +1,5 @@
 import { Instruction } from "../abstract/Instruction.js";
+import { add } from "../riscv/instructions.js";
 import { dataType, Type } from "../symbol/Type.js";
 
 export class Return extends Instruction {
@@ -16,5 +17,10 @@ export class Return extends Instruction {
             this.finalValue = interpretValue;
         }
         return this;
+    }
+
+    translate(tree, table) {
+        let val = this.value.translate(tree, table)
+        tree.assembler += add('a0', 't' + val.value, 'zero') + '\n'
     }
 }
