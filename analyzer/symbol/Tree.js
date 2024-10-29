@@ -18,6 +18,7 @@ export class Tree {
         this.cont = 0
         this.data = ""
         this.assembler = ""
+        this.functions = ""
         this.display = new Array()
     }
     getInstructions() {

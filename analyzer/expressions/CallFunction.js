@@ -44,5 +44,7 @@ export class CallFunction extends Instruction {
         return null;
     }
 
-    translate(tree, table) { }
+    translate(tree, table) {
+        tree.assembler += `jal ${this.id}\n`
+    }
 }

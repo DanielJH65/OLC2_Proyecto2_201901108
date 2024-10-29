@@ -40,11 +40,12 @@ export const analyze = () => {
         code += '.text\n.globl main\nmain:\n'
         code += ast.assembler
         code += 'li a7, 10\n'
-        code += 'ecall'
+        code += 'ecall\n\n'
+        code += ast.functions
         errors = ast.getErrors()
         symbols = ast.SymbolsReport
         document.getElementById("console").value = ast.getConsole()
-
+        generateAsm()
     } catch (error) {
         if (error instanceof SyntaxError) {
             if (isLexicalError(error)) {
@@ -59,8 +60,17 @@ export const analyze = () => {
         let salida = ""
         for (let err of errors) salida += err.toString() + "\n"
         document.getElementById("console").value = document.getElementById("console").value + "\n" + salida
-        console.log(code)
     }
+}
+
+const generateAsm = async () => {
+    console.log(code)
+    const blob = new Blob([code], { type: "text/asm" });
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(blob);
+    link.download = "Salida.asm";
+    document.body.appendChild(link);
+    link.click()
 }
 
 export const generateErrors = async () => {
