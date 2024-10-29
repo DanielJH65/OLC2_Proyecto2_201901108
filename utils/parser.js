@@ -45,8 +45,7 @@ export const analyze = () => {
         errors = ast.getErrors()
         symbols = ast.SymbolsReport
         document.getElementById("console").value = ast.getConsole()
-        console.log(code)
-        //generateAsm()
+        generateAsm()
     } catch (error) {
         if (error instanceof SyntaxError) {
             if (isLexicalError(error)) {
