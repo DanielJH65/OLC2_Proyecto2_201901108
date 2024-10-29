@@ -64,7 +64,6 @@ export const analyze = () => {
 }
 
 const generateAsm = async () => {
-    console.log(code)
     const blob = new Blob([code], { type: "text/asm" });
     const link = document.createElement("a");
     link.href = URL.createObjectURL(blob);

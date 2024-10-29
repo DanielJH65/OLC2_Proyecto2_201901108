@@ -19,7 +19,10 @@ export class Tree {
         this.data = ""
         this.assembler = ""
         this.functions = ""
+        this.params = false
+        this.paramsCont = 1
         this.display = new Array()
+        this.func = null
     }
     getInstructions() {
         return this.#instructions

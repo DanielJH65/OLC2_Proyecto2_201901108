@@ -45,6 +45,13 @@ export class CallFunction extends Instruction {
     }
 
     translate(tree, table) {
+        let func = table.getFunction(this.id)
+        if (this.params && this.params?.length === func.params?.length) {
+            for (let index = 0; index < this.params.length; index++) {
+                let val = this.params[index].interpret(tree, table)
+                tree.assembler += `li a${index + 1}, ${val}\n`
+            }
+        }
         tree.assembler += `jal ${this.id}\n`
     }
 }

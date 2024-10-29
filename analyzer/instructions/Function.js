@@ -37,14 +37,21 @@ export class Function extends Instruction {
     }
 
     translate(tree, table) {
+        tree.paramsCont = 1
         let prev = tree.assembler
         tree.assembler = ""
         tree.functions += `${this.name}:\n`
+        tree.func = table.getFunction(this.name)
+        if (this.params && this.params?.length == tree.func.params?.length) {
+            tree.params = true
+        }
         for (let instruction of this.instructions) {
             instruction.translate(tree, table)
         }
         tree.functions += tree.assembler
         tree.functions += 'ret\n\n'
         tree.assembler = prev
+        tree.params = false
+        tree.func = null
     }
 }
