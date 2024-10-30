@@ -13,6 +13,6 @@ export class Comentarios extends Instruction {
     }
 
     translate(tree, table) {
-        tree.assembler += this.data
+        tree.assembler += this.data + "\n"
     }
 }
